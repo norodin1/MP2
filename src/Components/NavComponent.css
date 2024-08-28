@@ -1,0 +1,16 @@
+.nav-link {
+  color: var(--bs-white) !important;
+}
+.navlink-wraper {
+  max-width: 100% !important;
+  margin: 0 5rem !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--bs-yellow) !important;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--bs-warning) !important;
+}
