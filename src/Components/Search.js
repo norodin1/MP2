@@ -5,9 +5,17 @@ export const Search = () => {
     <Container>
       <h4 className="text-center mb-3"> Go! Search your PokeMon..</h4>
       <InputGroup>
-        <Form.Control placeholder="Pokemmon name.." />
-        <Button variant="outline-warning">Search</Button>
-        <Button variant="outline-warning">Clear</Button>
+        <Form.Control
+          id="searchInput"
+          type="text"
+          placeholder="Pokemmon name.."
+        />
+        <Button id="searchBtn" type="submit" variant="outline-warning">
+          Search
+        </Button>
+        <Button id="clear" variant="outline-warning">
+          Clear
+        </Button>
       </InputGroup>
     </Container>
   );

@@ -3,6 +3,7 @@ import { Header } from "./Components/Header";
 import { Search } from "./Components/Search";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { PokemonList } from "./Components/PokemonList";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <NavComponent />
       <Header />
       <Search />
+      <PokemonList />
     </>
   );
 }
