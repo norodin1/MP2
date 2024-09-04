@@ -1,50 +1,47 @@
 import { useState, useEffect } from "react";
 import { Container, Card } from "react-bootstrap";
 
-export const PokemonList = () => {
-  const [pokemonList, setProducts] = useState([]);
-  const MAX_POKEMON = 5;
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
-      .then((response) => response.json())
-      .then((data) => setProducts(data.results));
-  }, []);
-  async function getDetails(id) {
-    try {
-      const pokemon = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${id}`
-      ).then((res) => res.json());
-      return pokemon;
-    } catch (error) {
-      console.error("Failed to fetch Pokemon data before redirect");
-    }
-  }
-  if (pokemonList) {
-    pokemonList.forEach((pokemon, i) => {
-      const pokemonID = pokemon.url.split("/")[6];
-      getDetails(pokemonID).then((details) => {
-        const pokemonDetails = details;
-        pokemonList[i]["details"] = pokemonDetails;
-      });
-    });
-  }
-  console.log(pokemonList);
-
+export const PokemonList = ({ pokemonList }) => {
   return (
-    <Container>
-      <Container>
-        <div>PokemonList</div>
+    <Container className="mt-5">
+      <Container className="row">
+        {pokemonList.map((pokemon) => {
+          return (
+            <Card style={{ width: "15rem" }} key={pokemon?.id} className="m-3">
+              <Card.Img
+                variant="top"
+                style={{ height: "10rem" }}
+                className="m-2"
+                src={
+                  pokemon?.details?.sprites?.other?.dream_world?.front_default
+                }
+              />
+              <Card.Body>
+                <Card.Title className="text-center">
+                  {pokemon?.details?.name.toUpperCase()}
+                </Card.Title>
+                <Card.Text>
+                  <span>Element: {pokemon?.details?.types[0]?.type?.name}</span>
+                </Card.Text>
+                <Card.Text>
+                  <span>
+                    Ability:{" "}
+                    {pokemon?.details?.abilities
+                      ?.map((x) => x.ability.name)
+                      ?.join(", ")}
+                  </span>
+                </Card.Text>
+                <Card.Text>
+                  <span>Height: {pokemon?.details?.height}ft</span>
+                </Card.Text>
+                <Card.Text>
+                  <span>Weight: {pokemon?.details?.weight}kg</span>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          );
+        })}
       </Container>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
     </Container>
   );
 };
