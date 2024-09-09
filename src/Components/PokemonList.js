@@ -5,9 +5,9 @@ export const PokemonList = ({ pokemonList }) => {
   return (
     <Container className="mt-5">
       <Container className="row">
-        {pokemonList.map((pokemon) => {
+        {pokemonList.map((pokemon, key) => {
           return (
-            <Card style={{ width: "15rem" }} key={pokemon?.id} className="m-3">
+            <Card style={{ width: "15rem" }} key={key} className="m-3">
               <Card.Img
                 variant="top"
                 style={{ height: "10rem" }}

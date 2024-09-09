@@ -52,7 +52,7 @@ function App() {
         pokemon.name.toLowerCase().startsWith(search)
       );
       setProductsCopy(filtered);
-      console.warn(pokemonListCopy);
+      // console.warn(pokemonListCopy);
     }
   }
   return (

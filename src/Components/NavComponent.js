@@ -1,4 +1,5 @@
 import { Container, Nav, Navbar, NavDropdown, Image } from "react-bootstrap";
+
 import "./NavComponent.css";
 
 export const NavComponent = () => {
@@ -12,10 +13,16 @@ export const NavComponent = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav variant="underline">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">API Source</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+
+            <Nav.Link
+              href="https://pokeapi.co/#google_vignette"
+              target="_blank"
+            >
+              API Source
+            </Nav.Link>
             <NavDropdown title="Mini Game" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
+              <NavDropdown.Item href="/Game">
                 Who's That Pokemon!
               </NavDropdown.Item>
             </NavDropdown>
