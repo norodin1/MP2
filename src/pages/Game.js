@@ -9,8 +9,10 @@ export const Game = () => {
   const [options, setOptions] = useState([]); // Stores Pokemon names
   const [optionsIds, setOptionsIds] = useState([]); // Stores Pokemon IDs
   const [pokemonData, setPokemonData] = useState(null);
-  const [selectedAnswer, setSelectedAnswer] = useState([]); // Stores the user's selected answer
-  const [feedback, setFeedback] = useState(""); // Feedback message (correct or incorrect)
+  const [feedback, setFeedback] = useState("Who's that Pokemon?!"); // Feedback message (correct or incorrect)
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const [round, setRound] = useState(0);
 
   // Function to fetch Pokémon data by ID
   async function fetchPokemonById(pokemonId) {
@@ -43,10 +45,9 @@ export const Game = () => {
   // Function to load new Pokémon and options
   const loadNewPokemonSet = async () => {
     // Reset feedback and selected answer
-    setFeedback("");
-    setSelectedAnswer(null);
+    setFeedback("Who's that Pokemon?!");
     setPokemonData(null);
-    // setOptions(null);
+    setSelectedAnswer(null);
 
     // Get a new random Pokemon ID that hasn't been used
     let pokemonId = getRandomPokemonId();
@@ -57,8 +58,7 @@ export const Game = () => {
     // Fetch the Pokémon data
     const pokemon = await fetchPokemonById(pokemonId);
     setPokemonData(pokemon); // Set the fetched Pokemon data
-
-    console.log(pokemon.name);
+    // console.log(pokemon.name);
     setUsedPokemonIds((prevUsedIds) => [...prevUsedIds, pokemonId]); // Track used Pokemon IDs
     setOptions([pokemon.name]); // Start options with the correct Pokémon's name
     setOptionsIds([pokemonId]); // Track options IDs
@@ -87,37 +87,39 @@ export const Game = () => {
     // Shuffle the options to randomize their order
     setOptions(shuffleArray(newOptions));
     setOptionsIds(newOptionsIds); // Save the final IDs for future reference
+    setRound(round + 1);
   };
-  console.log(options);
+  // console.log(options);
 
   // Function to handle answer selection
   function handleSelectAnswer(option) {
-    checkAnswer(option);
-    console.log(pokemonData.name);
+    setSelectedAnswer(option);
+    // console.log(pokemonData.name);
+    if (option === pokemonData.name) {
+      setFeedback("Correct!");
+      setScore(score + 1);
+    } else {
+      setFeedback("Incorrect");
+    }
     setTimeout(() => {
       loadNewPokemonSet(); // Load a new set after a short delay
     }, 2000); // 2-second delay before loading new Pokémon
   }
-  function checkAnswer(option) {
-    console.warn(option, pokemonData.name);
-
-    if (option === pokemonData.name) {
-      setFeedback("Correct!");
-    } else {
-      setFeedback("Incorrect");
-    }
-
-    // Generate new set of Pokémon and options after checking the answer
-  }
-
-  // Function to check if the selected answer is correct
+  // console.log(selectedAnswer, pokemonData?.name);
 
   return (
     <>
       <NavComponent />
       <Header />
       <Container>
-        <h2 className="text-center mt-3">{feedback}</h2>
+        <h2
+          className="text-center mt-3"
+          style={{
+            color: selectedAnswer === pokemonData?.name ? "#ddd" : "#fff",
+          }}
+        >
+          {feedback}
+        </h2>
         <Container className="d-flex justify-content-center mt-5">
           <img
             alt="PokeImage"
@@ -164,8 +166,8 @@ export const Game = () => {
         </Container>
         <Container className="m-3">
           <h4 id="points" className="text-center">
-            Points: <span id="pointsValue">0</span>/
-            <span id="totalCount">0</span>
+            Points: <span id="pointsValue">{score}</span>/
+            <span id="totalCount">{round}</span>
           </h4>
         </Container>
       </Container>
