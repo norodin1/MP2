@@ -13,6 +13,7 @@ export const Game = () => {
   const [showImage, setshowImage] = useState("hideImage");
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
+  const [onOff, setOnOff] = useState(false);
 
   // Function to fetch Pokémon data by ID
   async function fetchPokemonById(pokemonId) {
@@ -136,11 +137,13 @@ export const Game = () => {
     setOptions(shuffleArray(newOptions));
 
     setRound(round + 1);
+    setOnOff(false);
   };
   // console.log(options);
 
   // Function to handle answer selection
   function handleSelectAnswer(option) {
+    setOnOff(true);
     setSelectedAnswer(option);
     // console.log(pokemonData.name);
     if (option === pokemonData.name) {
@@ -177,6 +180,7 @@ export const Game = () => {
           {options.map((option, index) => (
             <Button
               variant="light"
+              disabled={onOff}
               key={index}
               className={
                 "col-6 col-sm-4 m-1 " +

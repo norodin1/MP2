@@ -66,3 +66,7 @@
   background-color: #e13e3e !important;
   color: #fff !important;
 }
+
+.btn:disabled {
+  opacity: 1 !important;
+}
