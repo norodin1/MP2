@@ -62,7 +62,7 @@ function App() {
       <Header />
       <Search onChangeSearch={onChangeSearch} />
       <PokemonList pokemonList={search ? pokemonListCopy : pokemonList} />
-      <FooterComponent></FooterComponent>
+      <FooterComponent />
     </>
   );
 }

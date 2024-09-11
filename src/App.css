@@ -70,3 +70,8 @@
 .btn:disabled {
   opacity: 1 !important;
 }
+
+.notFound-wraper {
+  height: 50vh;
+  padding-top: 5rem;
+}

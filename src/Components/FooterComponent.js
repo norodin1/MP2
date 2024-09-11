@@ -3,7 +3,7 @@ import "./FooterComponent.css";
 
 export const FooterComponent = () => {
   return (
-    <footer variant="warning" className="page-footer pt-4 mt-5">
+    <footer variant="warning" className="page-footer pt-4 mt-3">
       <Container className="d-flex justify-content-center">
         <ul className="list-unstyled row">
           <li className="col">
@@ -27,6 +27,11 @@ export const FooterComponent = () => {
           <li className="col">
             <a href="https://www.linkedin.com/">
               <i className="bi bi-linkedin"></i>
+            </a>
+          </li>
+          <li className="col">
+            <a className="text-decoration-none" href="/">
+              <strong>Home</strong>
             </a>
           </li>
         </ul>

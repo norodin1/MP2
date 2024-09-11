@@ -3,10 +3,10 @@ import { Container, Card } from "react-bootstrap";
 export const PokemonList = ({ pokemonList }) => {
   return (
     <Container className="mt-5">
-      <Container className="row">
+      <Container className="row justify-content-center">
         {pokemonList.map((pokemon, key) => {
           return (
-            <Card style={{ width: "15rem" }} key={key} className="m-3">
+            <Card style={{ width: "16rem" }} key={key} className="m-3">
               <Card.Img
                 variant="top"
                 style={{ height: "10rem" }}
@@ -41,6 +41,11 @@ export const PokemonList = ({ pokemonList }) => {
           );
         })}
       </Container>
+      {pokemonList?.length === 0 && (
+        <Container className="notFound-wraper">
+          <div className="text-center h1">Search Not Found!</div>
+        </Container>
+      )}
     </Container>
   );
 };

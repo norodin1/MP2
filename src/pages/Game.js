@@ -164,10 +164,10 @@ export const Game = () => {
     <>
       <NavComponent />
       <Header />
-      <Container>
+      <Container className="miniGame">
         <h2 className="text-center mt-3">{feedback}</h2>
         <Container>
-          <Container className="PokeImage-wraper d-flex justify-content-center mt-5">
+          <Container className="PokeImage-wraper d-flex justify-content-center">
             <img
               alt="PokeImage"
               src={pokemonData?.sprites?.other?.dream_world?.front_default}
