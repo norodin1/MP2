@@ -44,15 +44,25 @@
   background: rgba(255, 255, 255, 0.4);
 }
 
-.PokeImage {
+#PokeImage {
   height: 200px;
   max-width: 100%;
 }
 
 .hideImage {
-  filter: brightness(0%);
+  filter: brightness(0%) !important;
 }
 
 .showImage {
-  filter: brightness(100%);
+  filter: brightness(100%) !important;
+}
+
+.correct {
+  background-color: #5aae76 !important;
+  color: #fff !important;
+}
+
+.wrong {
+  background-color: #e13e3e !important;
+  color: #fff !important;
 }

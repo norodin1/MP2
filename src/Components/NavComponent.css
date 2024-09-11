@@ -14,3 +14,16 @@
 .nav-link:hover {
   color: var(--bs-warning) !important;
 }
+
+.dropdown-menu {
+  background: transparent !important;
+}
+
+.dropdown-item:hover {
+  color: var(--bs-warning) !important;
+  background: transparent !important;
+}
+
+.dropdown-item {
+  color: #fff !important;
+}

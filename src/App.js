@@ -5,11 +5,12 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PokemonList } from "./Components/PokemonList";
 import { useState, useEffect } from "react";
+import { FooterComponent } from "./Components/FooterComponent";
 function App() {
   const [search, setSearch] = useState("");
   const [pokemonList, setProducts] = useState([]);
   const [pokemonListCopy, setProductsCopy] = useState([]);
-  const MAX_POKEMON = 50;
+  const MAX_POKEMON = 100;
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
@@ -61,6 +62,7 @@ function App() {
       <Header />
       <Search onChangeSearch={onChangeSearch} />
       <PokemonList pokemonList={search ? pokemonListCopy : pokemonList} />
+      <FooterComponent></FooterComponent>
     </>
   );
 }

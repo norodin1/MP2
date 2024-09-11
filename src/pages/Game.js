@@ -7,10 +7,10 @@ import { useState, useEffect } from "react";
 export const Game = () => {
   const [usedPokemonIds, setUsedPokemonIds] = useState([]);
   const [options, setOptions] = useState([]); // Stores Pokemon names
-  const [optionsIds, setOptionsIds] = useState([]); // Stores Pokemon IDs
   const [pokemonData, setPokemonData] = useState(null);
   const [feedback, setFeedback] = useState("Who's that Pokemon?!"); // Feedback message (correct or incorrect)
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [showImage, setshowImage] = useState("hideImage");
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
 
@@ -29,7 +29,7 @@ export const Game = () => {
 
   // Function to get a random Pokémon ID
   function getRandomPokemonId() {
-    return Math.floor(Math.random() * 50) + 1;
+    return Math.floor(Math.random() * 100) + 1;
   }
 
   // Function to shuffle an array
@@ -39,6 +39,54 @@ export const Game = () => {
 
   // Load Pokémon data when the component mounts
   useEffect(() => {
+    const loadNewPokemonSet = async () => {
+      // Reset feedback and selected answer
+      setFeedback("Who's that Pokemon?!");
+      setPokemonData(null);
+      setSelectedAnswer(null);
+      setshowImage("hideImage");
+      const usedPokemonIds = [];
+      // Get a new random Pokemon ID that hasn't been used
+      let pokemonId = getRandomPokemonId();
+      while (usedPokemonIds.includes(pokemonId)) {
+        pokemonId = getRandomPokemonId();
+      }
+
+      // Fetch the Pokémon data
+      const pokemon = await fetchPokemonById(pokemonId);
+      setPokemonData(pokemon); // Set the fetched Pokemon data
+      // console.log(pokemon.name);
+      usedPokemonIds.push(pokemonId);
+      // setUsedPokemonIds((prevUsedIds) => [...prevUsedIds, pokemonId]); // Track used Pokemon IDs
+      setOptions([pokemon.name]); // Start options with the correct Pokémon's name
+
+      // Fetch more random Pokémon to create 4 options
+      const newOptions = [pokemon.name];
+      const newOptionsIds = [pokemonId];
+
+      while (newOptions.length < 4) {
+        let randomPokemonId = getRandomPokemonId();
+
+        // Ensure we don't reuse the same random ID
+        while (newOptionsIds.includes(randomPokemonId)) {
+          randomPokemonId = getRandomPokemonId();
+        }
+
+        // Fetch random Pokémon by new ID
+        const randomPokemon = await fetchPokemonById(randomPokemonId);
+
+        // Add new Pokémon to options and IDs
+        newOptions.push(randomPokemon.name);
+        newOptionsIds.push(randomPokemonId);
+      }
+      // console.log(newOptions);
+
+      // Shuffle the options to randomize their order
+      setOptions(shuffleArray(newOptions));
+
+      setRound(1);
+      setUsedPokemonIds(usedPokemonIds);
+    };
     loadNewPokemonSet(); // Call the function to load Pokémon options
   }, []); // Empty dependency array ensures this runs once on mount
 
@@ -48,6 +96,7 @@ export const Game = () => {
     setFeedback("Who's that Pokemon?!");
     setPokemonData(null);
     setSelectedAnswer(null);
+    setshowImage("hideImage");
 
     // Get a new random Pokemon ID that hasn't been used
     let pokemonId = getRandomPokemonId();
@@ -61,7 +110,6 @@ export const Game = () => {
     // console.log(pokemon.name);
     setUsedPokemonIds((prevUsedIds) => [...prevUsedIds, pokemonId]); // Track used Pokemon IDs
     setOptions([pokemon.name]); // Start options with the correct Pokémon's name
-    setOptionsIds([pokemonId]); // Track options IDs
 
     // Fetch more random Pokémon to create 4 options
     const newOptions = [pokemon.name];
@@ -86,7 +134,7 @@ export const Game = () => {
 
     // Shuffle the options to randomize their order
     setOptions(shuffleArray(newOptions));
-    setOptionsIds(newOptionsIds); // Save the final IDs for future reference
+
     setRound(round + 1);
   };
   // console.log(options);
@@ -98,8 +146,10 @@ export const Game = () => {
     if (option === pokemonData.name) {
       setFeedback("Correct!");
       setScore(score + 1);
+      setshowImage("showImage");
     } else {
-      setFeedback("Incorrect");
+      setFeedback("Incorrect!");
+      setshowImage("showImage");
     }
     setTimeout(() => {
       loadNewPokemonSet(); // Load a new set after a short delay
@@ -112,20 +162,14 @@ export const Game = () => {
       <NavComponent />
       <Header />
       <Container>
-        <h2
-          className="text-center mt-3"
-          // style={{
-          //   color: selectedAnswer === pokemonData?.name ? "#5aae76" : "#e13e3e",
-          // }}
-        >
-          {feedback}
-        </h2>
+        <h2 className="text-center mt-3">{feedback}</h2>
         <Container>
           <Container className="PokeImage-wraper d-flex justify-content-center mt-5">
             <img
               alt="PokeImage"
               src={pokemonData?.sprites?.other?.dream_world?.front_default}
-              className="PokeImage"
+              className={showImage}
+              id="PokeImage"
             ></img>
           </Container>
         </Container>
@@ -134,11 +178,15 @@ export const Game = () => {
             <Button
               variant="light"
               key={index}
-              className="col-6 col-sm-4 m-1 "
+              className={
+                "col-6 col-sm-4 m-1 " +
+                (selectedAnswer === option
+                  ? feedback === "Correct!"
+                    ? "correct"
+                    : "wrong"
+                  : "")
+              }
               onClick={() => handleSelectAnswer(option)}
-              // style={{
-              //   backgroundColor: selectedAnswer === option ? "#ddd" : "#fff",
-              // }}
             >
               {option.toUpperCase()}
             </Button>

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Container, Card } from "react-bootstrap";
 
 export const PokemonList = ({ pokemonList }) => {
