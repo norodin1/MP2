@@ -1,5 +1,5 @@
 import { Container, Button, Form, InputGroup } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const Search = ({ onChangeSearch }) => {
   const [searchText, setSearchText] = useState("");
@@ -9,6 +9,7 @@ export const Search = ({ onChangeSearch }) => {
   function onClear() {
     document.getElementById("searchInput").value = "";
     setSearchText("");
+    onChangeSearch("");
   }
   return (
     <Container>

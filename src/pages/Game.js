@@ -114,21 +114,25 @@ export const Game = () => {
       <Container>
         <h2
           className="text-center mt-3"
-          style={{
-            color: selectedAnswer === pokemonData?.name ? "#ddd" : "#fff",
-          }}
+          // style={{
+          //   color: selectedAnswer === pokemonData?.name ? "#5aae76" : "#e13e3e",
+          // }}
         >
           {feedback}
         </h2>
-        <Container className="d-flex justify-content-center mt-5">
-          <img
-            alt="PokeImage"
-            src={pokemonData?.sprites?.other?.dream_world?.front_default}
-          ></img>
+        <Container>
+          <Container className="PokeImage-wraper d-flex justify-content-center mt-5">
+            <img
+              alt="PokeImage"
+              src={pokemonData?.sprites?.other?.dream_world?.front_default}
+              className="PokeImage"
+            ></img>
+          </Container>
         </Container>
         <Container className="row justify-content-center m-3">
           {options.map((option, index) => (
             <Button
+              variant="light"
               key={index}
               className="col-6 col-sm-4 m-1 "
               onClick={() => handleSelectAnswer(option)}
@@ -136,7 +140,7 @@ export const Game = () => {
               //   backgroundColor: selectedAnswer === option ? "#ddd" : "#fff",
               // }}
             >
-              {option}
+              {option.toUpperCase()}
             </Button>
           ))}
         </Container>
