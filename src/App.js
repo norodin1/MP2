@@ -18,6 +18,8 @@ function App() {
       .then((response) => response.json())
       .then((data) => setProducts(data.results));
   }, []);
+
+  // fetch API by ID to get details per pokemon
   async function getDetails(id) {
     try {
       const pokemon = await fetch(
@@ -28,7 +30,7 @@ function App() {
       console.error("Failed to fetch Pokemon data before redirect");
     }
   }
-
+  // return pokemon with details set as new PokemonList
   useEffect(() => {
     if (pokemonList.length > 0) {
       const fetchDetails = async () => {
