@@ -41,7 +41,6 @@ export const Game = () => {
   // Load Pokémon data when the component mounts
   useEffect(() => {
     const loadNewPokemonSet = async () => {
-      // Reset feedback and selected answer
       setFeedback("Who's that Pokemon?!");
       setPokemonData(null);
       setSelectedAnswer(null);

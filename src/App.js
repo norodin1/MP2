@@ -12,6 +12,7 @@ function App() {
   const [pokemonListCopy, setProductsCopy] = useState([]);
   const MAX_POKEMON = 100;
 
+  // fetch nitial list of pokemon
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
       .then((response) => response.json())
@@ -46,6 +47,8 @@ function App() {
   }, [pokemonList]);
   if (pokemonList.length > 0) {
   }
+
+  // filters pokemonlist and set as copy
   function onChangeSearch(search) {
     setSearch(search);
     if (search) {
